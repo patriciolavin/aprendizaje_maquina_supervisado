@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis del Impacto del Cambio Climático en la Producción Agrícola</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            color: #34495e;
+            background-color: #ecf0f1;
+        }
+
+        .container { max-width: 1200px; margin: auto; }
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: #ecf0f1;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0px;
+        }
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.8em;
+            color: #ecf0f1;
+        }
+
+        .navbar {
+            background-color: #34495e;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .nav-link { color: #ecf0f1 !important; transition: background-color 0.3s ease; }
+        .navbar .nav-link:hover { background-color: #2c3e50; }
+        .navbar-brand { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+
+        .section {
+            background-color: #ffffff;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 8px solid #3498db;
+        }
+        
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 2em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        h2 i { margin-right: 15px; color: #3498db; }
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 2px dashed #dcdcdc;
+            padding-bottom: 8px;
+        }
+        h4 { font-family: 'Montserrat', sans-serif; font-weight: 600; color: #3498db; margin-top: 25px; margin-bottom: 15px; }
+
+        .subsection {
+            background-color: #fcfcfc;
+            border-left: 4px solid #aed6f1;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 25px;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
+        }
+        
+        .highlight-box {
+            background-color: #e8f6f3;
+            border-left: 5px solid #27ae60;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        th, td { border: 1px solid #e9ecef; padding: 12px 15px; text-align: left; }
+        th { background-color: #f2f7fb; font-family: 'Montserrat', sans-serif; font-weight: 600; color: #2c3e50; }
+        tr:hover { background-color: #eef7fc; }
+        
+        .plot-grid-3x {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .plot-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #e1e1e1;
+            padding: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 10px;
+        }
+        .plot-item h6 { font-family: 'Montserrat', sans-serif; font-weight: 600; text-align: center; color: #34495e; font-size: 1em; margin-bottom: 15px; }
+
+        pre {
+            background-color: #e8f6f3;
+            color: #212f3d;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Roboto Mono', monospace;
+        }
+        code { background-color: #eaf3f8; padding: 3px 6px; border-radius: 4px; font-size: 0.85em; color: #2980b9; }
+
+        .footer { text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #c0d9e6; color: #7f8c8d; }
+        
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+                /* 🔧 FIX SCROLL OFFSET FOR STICKY NAVBAR */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px; /* Altura del navbar */
+        }
+        @media (max-width: 767.98px) {
+            html {
+                scroll-padding-top: 100px; /* Para móviles donde el navbar puede expandirse más */
+            }
+        }
+
+        /* Para secciones con 1x2 distribución */
+        .plot-grid-2x {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            align-items: start; /* Alinea los ítems en la parte superior */
+        }
+
+        /* Para secciones con 1x3 distribución */
+        .plot-grid-3x {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            align-items: start; /* Alinea los ítems en la parte superior */
+        }
+
+        .plot-grid-3x:nth-last-child(1):nth-child(3n + 1) {
+            grid-column: 2; /* centra el último ítem si es el único en su fila */
+        }
+
+        .autor-derecha {
+            text-align: right;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .plot-grid-2x, .plot-grid-3x {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Análisis del Impacto del Cambio Climático en la Producción Agrícola</h1>
+        <h4 class="text-center">Reporte generado el: {{ fecha }}</h4>
+        <p class="text-center">Tamaño de prueba (test_size): <span class="value_digits">{{ test_size }}</span> | Semilla (random_state): <span class="value_digits">{{ random_state }}</span></p>
+        <p class="autor-derecha">Informe preparado por: Patricio LAVIN Pizarro</p>
+    </header>
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-chart-line"></i> Reporte</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <!-- General -->
+                <li class="nav-item">
+                <a class="nav-link" href="#introduccion"><i class="fas fa-info-circle"></i> Introducción</a>
+                </li>
+
+                <!-- Exploración -->
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="edaDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-database"></i> Exploración
+                </a>
+                <div class="dropdown-menu" aria-labelledby="edaDropdown">
+                    <a class="dropdown-item" href="#eda">2. EDA</a>
+                    <a class="dropdown-item" href="#metodologia">3. Metodología</a>
+                    <a class="dropdown-item" href="#preprocesamiento">Preprocesamiento</a>
+                </div>
+                </li>
+
+                <!-- Modelos -->
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="modelsDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cogs"></i> Modelos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="modelsDropdown">
+                    <a class="dropdown-item" href="#resultados_modelos">Resultados</a>
+                    <a class="dropdown-item" href="#modelos_regresion">Regresión</a>
+                    <a class="dropdown-item" href="#modelos_clasificacion">Clasificación</a>
+                    <a class="dropdown-item" href="#resumen_metricas">Resumen Métricas</a>
+                    <a class="dropdown-item" href="#mejores_modelos">Mejores Modelos</a>
+                </div>
+                </li>
+
+                <!-- Análisis -->
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="analysisDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-lightbulb"></i> Análisis
+                </a>
+                <div class="dropdown-menu" aria-labelledby="analysisDropdown">
+                    <a class="dropdown-item" href="#analisis_avanzado">PreProc. Avanzado</a>
+                    <a class="dropdown-item" href="#importancia_caracteristicas">Características</a>
+                    <a class="dropdown-item" href="#interpretacion_resultados">Interpretación</a>
+                    <a class="dropdown-item" href="#alcance">Alcance</a>
+                    <a class="dropdown-item" href="#analisis_final">Análisis Final</a>
+                </div>
+                </li>
+
+                <!-- Final -->
+                <li class="nav-item">
+                <a class="nav-link" href="#conclusiones"><i class="fas fa-check-circle"></i> Conclusiones</a>
+                </li>
+
+            </ul>
+            </div>
+        </div>
+        </nav>
+
+    
+    <main class="container mt-4">
+        <div class="section" id="introduccion">
+            <h2><i class="fas fa-info-circle"></i> 1. Introducción</h2>
+            <p>Este reporte presenta un análisis exhaustivo del impacto del cambio climático en la producción agrícola, utilizando modelos de aprendizaje supervisado para predecir la producción de alimentos y clasificar países según su vulnerabilidad climática. Se emplearon técnicas de regresión y clasificación, con un enfoque en la prevención de <i>data leakage</i>, calidad de datos, y optimización de modelos mediante un pipeline de MLOps robusto.</p>
+        </div>
+        
+        <div class="section" id="eda">
+            <h2><i class="fas fa-chart-bar"></i> 2. Análisis Exploratorio de Datos (EDA)</h2>
+            <div class="subsection">
+                <h3>2.1 Resumen General del Dataset</h3>
+                <p><b>Dimensiones:</b> {{ eda.dimensions }}</p>
+                <p><b>Memoria:</b> {{ eda.memory }}</p>
+                <h4>Primeras filas:</h4>
+                {{ eda.head | safe }}
+            </div>
+            <div class="subsection">
+                <h3>2.2 Estadísticas Descriptivas y Distribución</h3>
+                <h4>Estadísticas Descriptivas:</h4>
+                {{ eda.desc | safe }}
+                <h4>Asimetría (Skewness):</h4>
+                {{ eda.skewness | safe }}
+                <h4>Curtosis (Kurtosis):</h4>
+                {{ eda.kurtosis | safe }}
+                <h4>Percentiles Detallados:</h4>
+                {{ eda.percentiles | safe }}
+            </div>
+            <div class="subsection">
+                <h3>2.3 Visualización de Distribuciones Numéricas</h3>
+                <div class="plot-grid-2x">
+                    {% for plot_name, plot_html in eda.plots.items() if 'hist' in plot_name %}
+                        <div class="plot-item">{{ plot_html | safe }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="subsection">
+                <h3>2.4 Matriz de Correlación y Multicolinealidad</h3>
+                <p><b>Análisis de Multicolinealidad (VIF):</b> Un VIF > 5-10 puede indicar problemas. En este caso, <strong>Temperatura_promedio</strong> (5.47), <strong>Frecuencia_sequías</strong> (6.74) y <strong>Producción_alimentos</strong> (8.90) muestran una colinealidad moderada a alta, lo que es esperado dada la interrelación de estas variables.</p>
+                {{ eda.multicollinearity | safe }}
+                <div class="plot-item">
+                    <h4>Matriz de Correlación</h4>
+                    {{ eda.plots.correlation_matrix | safe }}
+                </div>
+                <div class="plot-grid-3x">
+                    {% for plot_name, plot_html in eda.plots.items() if 'scatter' in plot_name %}
+                        <div class="plot-item">{{ plot_html | safe }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="metodologia">
+            <h2><i class="fas fa-cogs"></i> 3. Metodología y Preprocesamiento</h2>
+            <h3>3.1 Metodología de Modelado</h3>
+            <p>Se emplearon modelos de regresión y clasificación en múltiples escenarios. Se utilizó una `PipelineFactory` 
+                para construir pipelines que integran preprocesamiento (imputación, escalado) y, opcionalmente, técnicas de 
+                balanceo de clases (SMOTE + RandomUnderSampler) para prevenir <i>data leakage</i>. La optimización de hiperparámetros 
+                se realizó con `GridSearchCV` y validación cruzada de 5 folds. Todos los experimentos y modelos fueron registrados 
+                con **MLflow**.</p>
+            <h3>3.2 Preprocesamiento y División de Datos</h3>
+            <p>El pipeline de datos incluyó la detección y eliminación de outliers (IQR), imputación de nulos con la mediana, y 
+                estandarización con `StandardScaler`. Los datos se dividieron 80/20 (entrenamiento/prueba), usando estratificación 
+                para la clasificación para preservar la distribución de la variable objetivo.</p>
+        </div>
+        
+        <div class="section" id="modelos_regresion">
+            <h2><i class="fas fa-chart-line"></i> 4. Resultados de Modelos de Regresión</h2>
+            {% for scenario, results in regression_results.items() %}
+                <div class="subsection">
+                    <h3>4.{{ loop.index }} Escenario: {{ scenario }}</h3>
+                    <p>Resultados de la evaluación para cada modelo de regresión en el escenario '{{ scenario }}'.</p>
+                    {% for model, metrics in results.items() %}
+                        <div class="mt-4">
+                            <h4>{{ model }}</h4>
+                            <div class="highlight-box">
+                                <strong>Métricas:</strong> R² = {{ metrics.R2 | round(2) }}, MAE = {{ metrics.MAE | round(2) }}, RMSE = {{ metrics.RMSE | round(2) }}
+                            </div>
+                            <div class="plot-grid-3x">
+                                <div class="plot-item">
+                                    <h6>Gráfico de Residuos</h6>
+                                    {{ regression_plots[scenario][model].residuals | safe }}
+                                </div>
+                                <div class="plot-item">
+                                    <h6>Real vs. Predicho</h6>
+                                    {{ regression_plots[scenario][model].real_vs_pred | safe }}
+                                </div>
+                                <div class="plot-item">
+                                    <h6>Curva de Aprendizaje</h6>
+                                    {{ regression_plots[scenario][model].learning_curve | safe }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="section" id="modelos_clasificacion">
+            <h2><i class="fas fa-stream"></i> 5. Resultados de Modelos de Clasificación</h2>
+            {% for scenario, results in classification_results.items() %}
+                <div class="subsection">
+                    <h3>5.{{ loop.index }} Escenario: {{ scenario }}</h3>
+                     <p>Resultados de la evaluación para cada modelo de clasificación en el escenario '{{ scenario }}'.</p>
+                    {% for model, metrics in results.items() %}
+                        <div class="mt-4">
+                            <h4>{{ model }}</h4>
+                            <div class="highlight-box">
+                                <strong>Métricas:</strong> Accuracy = {{ metrics.Accuracy | round(2) }}, F1-Score (Weighted) = {{ metrics.Report['weighted avg']['f1-score'] | round(2) }}, ROC-AUC = {{ metrics['ROC-AUC'] | round(2) }}
+                            </div>
+                            <div class="plot-grid-3x">
+                                <div class="plot-item">
+                                    <h6>Matriz de Confusión</h6>
+                                    {{ classification_plots[scenario][model].confusion_matrix | safe }}
+                                </div>
+                                <div class="plot-item">
+                                    <h6>Curva ROC</h6>
+                                    {{ classification_plots[scenario][model].roc_curve | safe }}
+                                </div>
+                                <div class="plot-item">
+                                    <h6>Curva de Aprendizaje</h6>
+                                    {{ classification_plots[scenario][model].learning_curve | safe }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="section" id="resumen_tablas">
+            <h2><i class="fas fa-table"></i> 6. Tabla Resumen de Métricas</h2>
+            <div class="subsection">
+                <h3>6.1 Regresión</h3>
+                <p>Esta tabla consolida el rendimiento de todos los modelos de regresión a través de todos los escenarios, facilitando 
+                    la comparación directa.</p>
+                {{ regression_summary_table | safe }}
+            </div>
+            <div class="subsection">
+                <h3>6.2 Clasificación</h3>
+                <p>Esta tabla consolida el rendimiento de todos los modelos de clasificación a través de todos los escenarios.</p>
+                {{ classification_summary_table | safe }}
+            </div>
+        </div>
+        
+        <div class="section" id="mejores_modelos">
+             <h2><i class="fas fa-trophy"></i> 7. Mejor Modelo Por Escenario</h2>
+             <div class="subsection">
+                <h3>7.1 Regresión</h3>
+                <div class="highlight-box">El mejor modelo de regresión en el escenario 'Full' es: <strong>{{ best_regression_model }}</strong></div>
+             </div>
+             <div class="subsection">
+                <h3>7.2 Clasificación</h3>
+                <div class="highlight-box">El mejor modelo de clasificación en el escenario 'Full' es: <strong>{{ best_classification_model }}</strong></div>
+             </div>
+        </div>
+
+        <div class="section" id="analisis_avanzado">
+            <h2><i class="fas fa-sliders-h"></i> 8. Análisis de Preprocesamiento y Estrategias</h2>
+             <div class="subsection">
+                <h3>8.1 Impacto del ajuste de hiperparámetros en regresión</h3><p>{{ analysis.hyperparameter_regression }}</p>
+                <h3>8.2 Impacto de la regularización en regresión</h3><p>{{ analysis.regularization_regression }}</p>
+                <h3>8.3 Impacto del ajuste completo en regresión</h3><p>{{ analysis.full_regression }}</p>
+             </div>
+             <div class="subsection">
+                <h3>8.4 Impacto del Balanceo de Datos en Clasificación</h3><p>{{ analysis.balancing_classification }}</p>
+                <h3>8.5 Impacto de la regularización en Clasificación</h3><p>{{ analysis.regularization_classification }}</p>
+                <h3>8.6 Impacto del ajuste completo en Clasificación</h3><p>{{ analysis.full_classification }}</p>
+             </div>
+        </div>
+    
+        <div class="section" id="feature_importance">
+            <h2><i class="fas fa-tags"></i> 9. Importancia de Características</h2>
+             <div class="subsection">
+                <h3>9.1 Técnica de Cálculo</h3><p>{{ feature_importance.technique }}</p>
+                <h3>9.2 Interpretación para Producción Agrícola</h3><p>{{ feature_importance.interpretation }}</p>
+             </div>
+        </div>
+
+        <div class="section" id="interpretacion">
+            <h2><i class="fas fa-lightbulb"></i> 10. Interpretación de Resultados</h2>
+            <div class="subsection">
+                <h3>10.1 Regresión (Producción de Alimentos)</h3><p>{{ interpretation.regression }}</p>
+                <h3>10.2 Clasificación (Nivel de Impacto Climático)</h3><p>{{ interpretation.classification }}</p>
+                <h3>10.3 Matriz de Confusión e Impacto</h3><p>{{ interpretation.confusion_matrix }}</p>
+                <h3>10.4 Métricas Clave e Implicaciones Globales</h3><p>{{ interpretation.metrics }}</p>
+            </div>
+        </div>
+
+        <div class="section" id="alcance">
+            <h2><i class="fas fa-binoculars"></i> 11. Alcance de Predicción por Modelo</h2>
+            <div class="subsection">
+                <h3>11.1 Alcance de los Modelos de Regresión</h3><p>{{ scope.regression }}</p>
+                <h3>11.2 Alcance de los Modelos de Clasificación</h3><p>{{ scope.classification }}</p>
+            </div>
+        </div>
+
+        <div class="section" id="modelos_guardados">
+            <h2><i class="fas fa-save"></i> 12. Modelos Entrenados</h2>
+            <div class="subsection">
+                <h3>12.1 Uso e Implementación con MLflow</h3><p>{{ models.usage }}</p>
+                <h3>12.2 Pasos Técnicos para Utilizarlos</h3>
+                <pre><code>{{ models.steps | safe }}</code></pre>
+            </div>
+        </div>
+    
+        <div class="section" id="analisis_final">
+            <h2><i class="fas fa-flag-checkered"></i> 13. Análisis de Resultados Finales</h2>
+            <div class="subsection">
+                <h3>13.1 ¿Cuál ofrece mejores resultados?</h3><p>{{ results.best_model }}</p>
+                <h3>13.2 Implicaciones en la Seguridad Alimentaria Global</h3><p>{{ results.food_security }}</p>
+            </div>
+        </div>
+    
+        <div class="section" id="conclusiones">
+            <h2><i class="fas fa-check-circle"></i> 14. Conclusiones y Recomendaciones</h2>
+            <div class="subsection">
+                <h3>14.1 Conclusiones Clave</h3><p>{{ conclusions.key_conclusions }}</p>
+                <h3>14.2 Recomendaciones Estratégicas</h3><div>{{ conclusions.recommendations | safe }}</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; Reporte Generado para la Actividad Final del Módulo 6 por Patricio LAVIN Pizarro</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

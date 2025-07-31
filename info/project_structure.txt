@@ -1,0 +1,26 @@
+/cambio_climatico_proyecto
+├── /data
+│   ├── /raw
+│   │   └── cambio_climatico_agricola.csv
+│   ├── /processed
+│   └── /bad_data
+│       ├── outliers.csv
+│       ├── nulos.csv
+│       └── mala_codificacion.csv
+├── /src
+│   ├── /preprocessing
+│   │   └── preprocess.py
+│   ├── /models
+│   │   └── train_models.py
+│   ├── /visualization
+│   │   └── visualize.py
+│   ├── /utils
+│   │   └── logger.py
+│   └── /reports
+│       └── templates
+│           └── report_template.html
+├── /logs
+│   └── project.log
+├── main.py
+├── requirements.txt
+└── pyproject.toml
