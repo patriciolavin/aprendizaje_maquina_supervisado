@@ -29,3 +29,9 @@ Trabajar en este proyecto fue un excelente ejercicio de la metodología clásica
 
 * **Punto Alto:** Sin duda, el momento más gratificante fue ver el gráfico de `feature importance` por primera vez. Pasar de una tabla de números a una visualización clara que te dice "oye, la temperatura es lo que realmente importa aquí" es el instante en que los datos empiezan a contar una historia. Confirmó que el modelo no solo predecía, sino que también extraía lógica del sistema.
 * **Punto Bajo:** La etapa de ajuste de hiperparámetros. Es un proceso computacionalmente intensivo y, a veces, un poco "a ciegas". Esperar a que `GridSearchCV` termine sus combinaciones pone a prueba la paciencia, y es un recordatorio de que la optimización de modelos es tanto un arte como una ciencia. Fue un trade-off constante entre buscar el mejor rendimiento y gestionar el tiempo de cómputo.
+
+## Cómo Utilizar
+
+1.  Clona este repositorio: `git clone https://github.com/patriciolavin/aprendizaje_maquina_supervisado.git`
+2.  Instala las dependencias: `pip install pandas scikit-learn matplotlib seaborn`
+3.  Ejecuta la Jupyter Notebook para ver el análisis completo.
