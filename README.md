@@ -19,12 +19,13 @@ El flujo de trabajo se desarrolló de principio a fin, cubriendo las siguientes 
     * Se aplicaron técnicas de **ajuste de hiperparámetros** para optimizar el modelo con mejor desempeño.
     * El rendimiento final se midió utilizando métricas estándar de regresión como el **Error Cuadrático Medio (MSE)** y el **Error Absoluto Medio (MAE)** para interpretar la precisión del modelo en unidades del mundo real.
 
-## Resultados Clave
+## 📈 Resultados Clave
 
-El modelo final, un `Gradient Boosting Regressor` optimizado, logró predecir el rendimiento de los cultivos con un alto grado de precisión. El análisis de importancia de características (`feature importance`) reveló que **[Menciona la variable más importante que encontraste, ej: 'la temperatura máxima']** es el factor más determinante para el rendimiento, proveyendo un insight valioso para la gestión de cultivos.
+El modelo final, un `Gradient Boosting Regressor` optimizado, logró predecir el rendimiento de los cultivos con un alto grado de precisión. El análisis de importancia de características (`feature importance`) reveló que la temperatura máxima es el factor más determinante para el rendimiento, proveyendo un insight valioso para la gestión de cultivos.
 
-## Cómo Utilizar
+## Reflexión Personal y Desafíos
 
-1.  Clona este repositorio: `git clone https://github.com/patriciolavin/aprendizaje_maquina_supervisado.git`
-2.  Instala las dependencias: `pip install pandas scikit-learn matplotlib seaborn`
-3.  Ejecuta la Jupyter Notebook para ver el análisis completo.
+Trabajar en este proyecto fue un excelente ejercicio de la metodología clásica de machine learning. El dataset, aunque no era masivo, presentaba desafíos realistas como la necesidad de una limpieza cuidadosa y la elección correcta de un modelo de regresión.
+
+* **Punto Alto:** Sin duda, el momento más gratificante fue ver el gráfico de `feature importance` por primera vez. Pasar de una tabla de números a una visualización clara que te dice "oye, la temperatura es lo que realmente importa aquí" es el instante en que los datos empiezan a contar una historia. Confirmó que el modelo no solo predecía, sino que también extraía lógica del sistema.
+* **Punto Bajo:** La etapa de ajuste de hiperparámetros. Es un proceso computacionalmente intensivo y, a veces, un poco "a ciegas". Esperar a que `GridSearchCV` termine sus combinaciones pone a prueba la paciencia, y es un recordatorio de que la optimización de modelos es tanto un arte como una ciencia. Fue un trade-off constante entre buscar el mejor rendimiento y gestionar el tiempo de cómputo.
